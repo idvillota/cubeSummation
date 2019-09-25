@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CubeSummation.Contracts\CubeSummation.Contracts.csproj" />
+    <ProjectReference Include="..\CubeSummation.Repository\CubeSummation.Repository.csproj" />
   </ItemGroup>
 
 </Project>

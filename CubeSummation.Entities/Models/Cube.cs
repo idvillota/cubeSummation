@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CubeSummation.Entities.Models
 {
@@ -8,6 +9,7 @@ namespace CubeSummation.Entities.Models
 
         public int Size { get; set; }
 
+        [NotMapped]
         public int[,,] Array { get; set; }
     }
 }

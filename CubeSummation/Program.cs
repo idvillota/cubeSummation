@@ -14,6 +14,7 @@ namespace CubeSummation
     {
         public static void Main(string[] args)
         {
+            //CreateWebHostBuilder(args).Build().SeedData().Run();
             CreateWebHostBuilder(args).Build().Run();
         }
 

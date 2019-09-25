@@ -1,9 +1,13 @@
+using CubeSummation.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NLog;
+using System;
+using System.IO;
 
 namespace CubeSummation
 {
@@ -11,6 +15,7 @@ namespace CubeSummation
     {
         public Startup(IConfiguration configuration)
         {
+            LogManager.LoadConfiguration(String.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
             Configuration = configuration;
         }
 
@@ -19,6 +24,14 @@ namespace CubeSummation
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.ConfigureCors();
+            services.ConfigureIISIntegration();
+            services.ConfigureLoggerService();
+
+            services.ConfigureDependencies();
+            services.ConfigureSQLContext(Configuration);
+            services.ConfigureRepositoryWrapper();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // In production, the Angular files will be served from this directory
