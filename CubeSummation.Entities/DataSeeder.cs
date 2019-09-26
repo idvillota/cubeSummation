@@ -22,7 +22,15 @@ namespace CubeSummation.Entities
         {
             AddNewCube(new Cube
             {
-                Size = 2,
+                Size = 2,                
+            });
+            AddNewCube(new Cube
+            {
+                Size = 3,
+            });
+            AddNewCube(new Cube
+            {
+                Size = 4,
             });
         }
 
