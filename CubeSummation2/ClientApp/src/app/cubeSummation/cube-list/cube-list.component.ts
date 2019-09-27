@@ -34,11 +34,11 @@ export class CubeListComponent implements OnInit {
     this.router.navigate(['/cubes/create']);
   }
 
-  updateCube(cube: ICube) {
-    window.localStorage.removeItem('updateCubeId');
-    window.localStorage.setItem('updateCubeId', cube.id),
-      this.router.navigate(['../cubes/update']);
-      //this.router.navigate(['cubes/update', cubeId]);
+  updateCube(cubeId: string) {
+    //window.localStorage.removeItem('updateCubeId');
+    //window.localStorage.setItem('updateCubeId', cube.id),
+    //  this.router.navigate(['../cubes/update']);
+    this.router.navigate(['/cubes/update', cubeId]);
     
   }
 

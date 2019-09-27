@@ -2,8 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ICube } from "../cube";
 import { CubeService } from "../cube.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { FormBuilder, FormGroup, Validators, FormsModule } from "@angular/forms";
-import { first } from "rxjs/operators";
+import { FormGroup, Validators, FormControl, FormsModule, ReactiveFormsModule, FormBuilder } from "@angular/forms";
 
 @Component({
   templateUrl: './cube-update.component.html'
@@ -22,43 +21,48 @@ export class CubeUpdateComponent implements OnInit {
   }
 
   ngOnInit() {
-    let cubeId = window.localStorage.getItem("updateCubeId");
-    if (!cubeId) {
-      alert("Invalid Action");
-      this.router.navigate(['cubes']);
-      return;
-    }
-
-    this.updateForm = this.formBuilder.group({
-      id: [''],
-      size: ['', Validators.required],
+    this.updateForm = new FormGroup({
+      size: new FormControl('', [Validators.required])
     });
 
-    this.cubeService.getCube(cubeId)
-      .subscribe(data => {
-        this.updateForm.setValue(data);
-      });    
+    let cubeUpdateId = this.route.snapshot.params['id'];
+    this.getCubeById(cubeUpdateId);
+
   }
 
-  onSubmit() {
-    alert("submit...");
-    //this.cubeService.updateCube(this.updateForm.value)
-    //  .pipe(first())
-    //  .subscribe(data => {
-    //    if (data.status === 200) {
-    //      alert('Cube updated successfully')
-    //    } else {
-    //      alert(data.message),
-    //    }
-    //  }
-    //    )
+  cubeUpdate(cubeFormValue) {
+    if (this.updateForm.valid)
+      this.executeCubeUpdate(cubeFormValue);
   }
 
-  getCube(id: string) {
-    this.cubeService.getCube(id).subscribe({
-      next: cube => this.cube = cube,
-      error: err => this.errorMessage = err
-    });
+  private executeCubeUpdate(cubeFormValue) {
+    this.cube.size = cubeFormValue.size;
+    this.cubeService.updateCube(this.cube)
+      .subscribe(res => {
+        alert('Cube succesfully uploaded');
+      },
+        (error) => {
+          console.log("cube-update.component::onSubmit::error");
+        });
+  }
+
+  getCubeById(id: string) {
+    this.cubeService.getCube(id).subscribe(
+      res => {
+      this.cube = res as ICube
+      this.updateForm.patchValue(this.cube);
+    },
+      (error) => {
+        console.log("cube-update.component::getCubeByid::error");
+      }
+    );
+  }
+
+  public validateControl(controlName: string) {
+    if (this.updateForm.controls[controlName].invalid && this.updateForm.controls[controlName].touched)
+      return true;
+
+    return false;
   }
 
 }
