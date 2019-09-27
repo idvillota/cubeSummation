@@ -1,0 +1,26 @@
+<div class="container-fluid">
+  <form [formGroup]="cubeForm" autocomplete="off" novalidate (ngSubmit)="createCube(cubeForm.value)">
+    <div class="form-horizontal well">
+
+      <div class="form-group">
+        <label for="size" class="custom-control-label col-md-2">Size:</label>
+        <div class="col-md-5">
+          <input type="text" formControlName="size" id="size" class="form-control" />
+        </div>
+        <div class="col-md-5">
+          <!--<em *ngIf="validateControl('size') && hasError('size', 'required')">Size is required</em>-->
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-offset-5 col-md-1">
+          <button type="submit" class="btn btn-info" [disabled]="!cubeForm.valid">Save</button>
+        </div>
+        <div class="col-md-1">
+          <button type="button" class="btn btn-danger" (click)="redirectToCubeList()">Cancel</button>
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>

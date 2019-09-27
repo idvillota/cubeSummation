@@ -1,5 +1,5 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { ICube } from './cube';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { ICube, ICubeForCreation } from './cube';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
@@ -19,15 +19,32 @@ export class CubeService {
     return this.http.get<ICube[]>(this.cubeUrl)
       .pipe(
         tap(data => console.log('All: ' + JSON.stringify(data))),
-        catchError(this.handleError))
-      ;
+        catchError(this.handleError)
+      );
   }
 
-  getCube(id: string): Observable<ICube | undefined>{
-    return this.getCubes()
+  getCube(id: string): Observable<ICube | undefined> {
+    return this.http.get<ICube>(this.cubeUrl + '/' + id)
       .pipe(
-        map((cubes: ICube[]) => cubes.find(c => c.id === id))
+        tap(data => console.log('cube by id:' + id + ' ' + JSON.stringify(data))),
+        catchError(this.handleError)
       );
+  }
+
+  createCube(cube: ICubeForCreation): Observable<ICubeForCreation> {
+    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+
+    return this.http.post<ICubeForCreation>(this.cubeUrl, cube, httpOptions);
+  }
+
+  updateCube(cube: ICube): Observable<ICube> {
+    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+    return this.http.put<ICube>(this.cubeUrl, cube, httpOptions);
+  }
+
+  deleteCube(cubeId: string): Observable<ICube> {
+    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+    return this.http.delete<ICube>(this.cubeUrl + '/' +  cubeId, httpOptions);
   }
 
   private handleError(err: HttpErrorResponse) {

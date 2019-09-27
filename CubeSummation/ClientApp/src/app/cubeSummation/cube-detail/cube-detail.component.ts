@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { ICube } from "./cube";
+import { ICube } from "../cube";
 import { ActivatedRoute, Router } from "@angular/router";
-import { CubeService } from "./cube.service";
+import { CubeService } from "../cube.service";
 
 @Component({
   templateUrl: './cube-detail.component.html'
