@@ -39,7 +39,7 @@ export class CubeService {
 
   updateCube(cube: ICube): Observable<ICube> {
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-    return this.http.put<ICube>(this.cubeUrl, cube, httpOptions);
+    return this.http.put<ICube>(this.cubeUrl + '/' + cube.id, cube, httpOptions);
   }
 
   deleteCube(cubeId: string): Observable<ICube> {

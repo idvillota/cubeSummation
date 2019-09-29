@@ -2,6 +2,7 @@ import { OnInit, Component } from "@angular/core";
 import { FormGroup, Validators, FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ICube, ICubeForCreation } from "../cube";
 import { CubeService } from "../cube.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-cube-create',
@@ -12,7 +13,8 @@ export class CubeCreateComponent implements OnInit {
   public errorMessage: string = '';
   public cubeForm: FormGroup;
 
-  constructor(private cubeService: CubeService) {
+  constructor(private cubeService: CubeService,
+              private router: Router,) {
   }
 
   ngOnInit() {
@@ -45,6 +47,7 @@ export class CubeCreateComponent implements OnInit {
       this.cubeService.createCube(cube)
         .subscribe(rest => {
           alert("Cube created successfully");
+          this.router.navigate(['/cubes']);
         },
           (error => {
             alert("Error creating cube");

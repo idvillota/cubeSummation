@@ -13,6 +13,7 @@ import { CubeListComponent } from './cubeSummation/cube-list/cube-list.component
 import { CubeDetailComponent } from './cubeSummation/cube-detail/cube-detail.component';
 import { CubeUpdateComponent } from './cubeSummation/cube-update/cube-update.component';
 import { CubeCreateComponent } from './cubeSummation/cube-create/cube-create.component';
+import { CubeDeleteComponent } from './cubeSummation/cube-delete/cube-delete.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { CubeCreateComponent } from './cubeSummation/cube-create/cube-create.com
     CubeListComponent,
     CubeDetailComponent,
     CubeUpdateComponent,
-    CubeCreateComponent
+    CubeCreateComponent,
+    CubeDeleteComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -38,7 +40,8 @@ import { CubeCreateComponent } from './cubeSummation/cube-create/cube-create.com
       { path: 'cubes', component: CubeListComponent },
       { path: 'cubes/detail/:id', component: CubeDetailComponent},
       { path: 'cubes/update/:id', component: CubeUpdateComponent },
-      { path: 'cubes/create', component: CubeCreateComponent }
+      { path: 'cubes/create', component: CubeCreateComponent },
+      { path: 'cubes/delete', component: CubeDeleteComponent }
     ])
   ],
   providers: [],

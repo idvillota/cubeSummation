@@ -1,6 +1,6 @@
 
 <div class="container-fluid">
-  <form [formGroup]="updateForm" autocomplete="off" novalidate (ngSubmit)="cubeUpdate(cubeForm.value)">
+  <form [formGroup]="cubeForm" autocomplete="off" novalidate (ngSubmit)="updateCube(cubeForm.value)">
     <div class="form-horizontal well">
 
       <div class="form-group">
@@ -9,7 +9,7 @@
           <input type="text" formControlName="size" id="size" class="form-control" />
         </div>
         <div class="col-md-5">
-          <!--<em *ngIf="validateControl('size') && hasError('size', 'required')">Size is required</em>-->
+          <em *ngIf="validateControl('size') && hasError('size', 'required')">Size is required</em>
         </div>
       </div>
 

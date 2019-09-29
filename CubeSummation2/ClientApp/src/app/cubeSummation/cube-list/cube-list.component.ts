@@ -35,19 +35,11 @@ export class CubeListComponent implements OnInit {
   }
 
   updateCube(cubeId: string) {
-    //window.localStorage.removeItem('updateCubeId');
-    //window.localStorage.setItem('updateCubeId', cube.id),
-    //  this.router.navigate(['../cubes/update']);
-    this.router.navigate(['/cubes/update', cubeId]);
-    
+    this.router.navigate(['/cubes/update', cubeId]);    
   }
 
   deleteCube(cubeId: string) {
-    if (confirm("Are you sure you want to delete this?")) {
-      this.cubeService.deleteCube(cubeId).subscribe(() => {
-        this.getCubes();
-      });
-    }
+    this.router.navigate(['/cubes/delete', cubeId]);
   }
 
 }

@@ -12,7 +12,7 @@ export class CubeUpdateComponent implements OnInit {
 
   cube: ICube;
   errorMessage = '';
-  updateForm: FormGroup;
+  public cubeForm: FormGroup;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -21,7 +21,8 @@ export class CubeUpdateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.updateForm = new FormGroup({
+    console.log("cube-update.component::ngOnInit:::start...");
+    this.cubeForm = new FormGroup({
       size: new FormControl('', [Validators.required])
     });
 
@@ -30,8 +31,8 @@ export class CubeUpdateComponent implements OnInit {
 
   }
 
-  cubeUpdate(cubeFormValue) {
-    if (this.updateForm.valid)
+  updateCube(cubeFormValue) {
+    if (this.cubeForm.valid)
       this.executeCubeUpdate(cubeFormValue);
   }
 
@@ -40,6 +41,7 @@ export class CubeUpdateComponent implements OnInit {
     this.cubeService.updateCube(this.cube)
       .subscribe(res => {
         alert('Cube succesfully uploaded');
+        this.router.navigate(['/cubes']);
       },
         (error) => {
           console.log("cube-update.component::onSubmit::error");
@@ -50,7 +52,7 @@ export class CubeUpdateComponent implements OnInit {
     this.cubeService.getCube(id).subscribe(
       res => {
       this.cube = res as ICube
-      this.updateForm.patchValue(this.cube);
+      this.cubeForm.patchValue(this.cube);
     },
       (error) => {
         console.log("cube-update.component::getCubeByid::error");
@@ -59,7 +61,7 @@ export class CubeUpdateComponent implements OnInit {
   }
 
   public validateControl(controlName: string) {
-    if (this.updateForm.controls[controlName].invalid && this.updateForm.controls[controlName].touched)
+    if (this.cubeForm.controls[controlName].invalid && this.cubeForm.controls[controlName].touched)
       return true;
 
     return false;
